@@ -27,3 +27,9 @@
 
 //DELETE FROM nombre_tabla WHERE campo=valor
 //IMPORTANTEEEE no olvidarnos el  WHERE o nos borra todo
+
+// ALTER TABLE nombre-tabla ADD COLUMN nombe-columna =>condiciones
+
+//ALTER TABLE nombre-table MODIFY COLUMN nombre-column => condiciones
+
+//ALTER TABLE nombre-table CHANGE nombre-column nuevo-nombre-column => condiciones 
