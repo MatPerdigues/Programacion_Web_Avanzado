@@ -1,5 +1,6 @@
 //para crear una API debo crear el package.json -> npm init -y
 //Además tengo que instalar la extención express -> npm i express
+//instalar tambien nodemon y cors => npm i nodemon / npm i cors
 //no olvidar crear el archivo .gitignore incluyendo node_modules
 // en archivo app.js se crea la escucha a través del puerto al que se va a conectar la API
 //Para conectarme a una base de datos MongoDB necesito el paquete mongoose -> npm i mongoose
@@ -13,6 +14,9 @@
 //En app.js voy a definir los comandos para la base de datos
 //Para ordenar el app.js y que no sea tan extenso, los comandos a la base de datos (CRUD) los voy a definir en una carpeta controllers y luego importarlos desde app.js. Las funciones de esos controller van a estar un la carpeta utils en el archivo funcionesDB.js por lo que es necesario exportar todas esas funciones desde funcionesDB.js e importarlas desde controllerPlatos.js. De esta manera el app.js va a contener el ruteo y los controllers
 //El routes.js utliza express por lo que debe requerirse.
-//para comprobar las peticiones del front a la API podemos usar Postman
+//para comprobar las peticiones del front a la API podemos usar Postman agregando los endpoints definidos en routes
+//Cors es un paquete que evita que el front tire error al consumir una API desde otra fuente como react. Instalar cors con => npm install cors
+//La DB Mongo es muy flexible y permite cargar cualquier tipo de dato por lo que conviene estructurarla creando modelos para lo cual es necesario utilizar mongoose.
+
 
 

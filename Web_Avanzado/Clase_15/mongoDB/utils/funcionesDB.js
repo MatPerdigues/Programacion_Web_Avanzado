@@ -12,7 +12,7 @@ const cargarPlato = async(platoNombre,nuevoPrecio,nuevoStock,nuevaCategoria)=>{
         categoria:nuevaCategoria
     })
     let resultado = await modelPlato.collection.insertOne(nuevoPlato);
-    console.log(resultado); 
+    return resultado; 
 };
 
 //cargarPlato('Pollo al horno con papas', 1938, 4, 'no vegano');

@@ -1,0 +1,1 @@
+//para conectar con base de ddatos MySQL se necesita instalar MySQL2 => npm install mysql2
