@@ -6,12 +6,14 @@ const routes = require('./routes/routesPeliculas')
 
 require('./config/dataBase');
 
-app.listen(puerto, ()=>{
-    console.log('Conectado a puerto ' + puerto);
-})
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
+app.use('',routes)
 
 
 
+app.listen(puerto, ()=>{
+    console.log('Conectado a puerto ' + puerto);
+})
