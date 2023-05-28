@@ -1,6 +1,8 @@
 //para crear una API debo crear el package.json -> npm init -y
 //Además tengo que instalar la extención express -> npm i express
 //instalar tambien nodemon y cors => npm i nodemon / npm i cors
+//instalar multer => npm i multer 
+//para usar DB mysql ejecutar => npm install mysql2 
 //no olvidar crear el archivo .gitignore incluyendo node_modules
 // en archivo app.js se crea la escucha a través del puerto al que se va a conectar la API
 //Para conectarme a una base de datos MongoDB necesito el paquete mongoose -> npm i mongoose
