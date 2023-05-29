@@ -17,6 +17,8 @@ const agregarPelicula=(req,res)=>{
 
     const{titulo,duracion,genero,tickets}=req.body
     //console.log(req.body);
+    const usuario=req.auth;
+    console.log(req.auth);
     
     const img= 'http://localhost:3200/public/' + req.file.filename; //sin el multer, al usar express.json la API no va a poder enviar archivos (formato diferente a .json)
     //con esto se convierte el nombre del archivo en un enlace que luego puede ser utilizado en la etiqueta src=
@@ -27,12 +29,13 @@ const agregarPelicula=(req,res)=>{
         if(error){
             res.send(error);
         } else{
-            res.status(200).json('Película cargada correctamente')
+            res.status(200).json(`Película cargada correctamente por el usuario ${usuario}`)
         }
-        
+    
+        res.send("Hecho!!")
     })
 
-    res.send("Hecho!!")
+    
 }
 
 const registrarUsuario=(req,res)=>{
@@ -58,8 +61,23 @@ const registrarUsuario=(req,res)=>{
 
 const verificacionUsuario=(req,res,next)=>{
 
+    const authToken=req.headers.authorization;
+    const token=authToken.split(" ").pop(); //debido a que al mostrar por consola el token se entrega con "bearer" al principio, se utiliza el split y el pop para quedarnos solo con la última parte (token)
+    //console.log(authToken);
+    
+    next();
+    jwt.verify(token,'contraseñaSuperSegura',(error,data)=>{
+        if(error){
+            res.send(error);
+        }else{
+            console.log(data);
+            req.auth=data.nombreUsuario;
+            next();
+        }
+    })
+
+
+
 }
-
-
 
 module.exports={infoCompleta,agregarPelicula,registrarUsuario,verificacionUsuario}
