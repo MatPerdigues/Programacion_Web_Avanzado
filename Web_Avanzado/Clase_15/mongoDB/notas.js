@@ -19,6 +19,8 @@
 //para comprobar las peticiones del front a la API podemos usar Postman agregando los endpoints definidos en routes
 //Cors es un paquete que evita que el front tire error al consumir una API desde otra fuente como react. Instalar cors con => npm install cors
 //La DB Mongo es muy flexible y permite cargar cualquier tipo de dato por lo que conviene estructurarla creando modelos para lo cual es necesario utilizar mongoose.
+//Descargar jsonwebtoken si quiero generar ingresos para ciertos usuarios => npm i jsonwebtoken
+//npm i dotenv para encriptar ciertas variables
 
 
 
