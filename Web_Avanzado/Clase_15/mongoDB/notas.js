@@ -21,6 +21,7 @@
 //La DB Mongo es muy flexible y permite cargar cualquier tipo de dato por lo que conviene estructurarla creando modelos para lo cual es necesario utilizar mongoose.
 //Descargar jsonwebtoken si quiero generar ingresos para ciertos usuarios => npm i jsonwebtoken
 //npm i dotenv para encriptar ciertas variables
+//instalar bcrypt para encriptar contraseñas=> npm i bcrypt
 
 
 

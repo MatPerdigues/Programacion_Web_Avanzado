@@ -1,6 +1,6 @@
 const express=require('express');
 const server=express();
-const puerto=process.env.PUERTO; //EL dotenv permite que información sensible no se encuentre visible en el archivo y se despliegue en el archivo oculto .env
+const puerto=3200; //EL dotenv permite que información sensible no se encuentre visible en el archivo y se despliegue en el archivo oculto .env
 const cors=require('cors')
 require('./config/dataBase')
 require('dotenv').config();

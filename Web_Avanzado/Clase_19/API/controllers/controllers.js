@@ -1,6 +1,7 @@
 const dbConnection = require('../config/dataBase');
 const jwt=require('jsonwebtoken');
 require('dotenv').config();
+const bcrypt=require('bcrypt');
 
 const infoCompleta=(req,res)=>{
 
@@ -36,39 +37,57 @@ const agregarPelicula=(req,res)=>{
         res.send("Hecho!!")
     })
 
-    
 }
 
-const login=(req,res)=>{
-    const {nombreUsuario,password}=req.body;
 
-    dbConnection.query("SELECT * FROM administradores WHERE nombreUsuario=?",[nombreUsuario],(error,data)=>{
+
+
+const login = (req,res)=>{
+    const{user,password}=req.body;
+
+    dbConnection.query("SELECT * FROM administradores WHERE nombreUsuario=?",[user],async(error,data)=>{
         if(error){
-            res.send("Usuario NO registrado")
+            res.send("Error en el servidor " + error)
         }else{
-            let info = data[0];
+            if(data.length==0){
+                res.send("Usuario no registrado");
+            }else{
+
+            
+            console.log("Usuario encontrado")
+            let info=data[0];
+            console.log(info);
+            const passOk=await bcrypt.compare(password,info.password)
+            console.log(info.password);
+            console.log(password)
+            console.log(passOk); 
+
+            if(passOk){
+                console.log("Usuario correcto, generando Token");
+                jwt.sign({user},PASS_SEGURA,{expiresIn:'30m'},(error,token)=>{
+                    if(error){
+                        res.send(error)
+                    }else{
+                        res.json({
+                            mensaje:"usuario logeado",
+                            tokenLogIn:token
+                        })
+                    }
+                })
+            }else{
+                res.json({mensaje:"Password incorrecta"})
+            }
+        }
         }
     })
-/*const usuarioRegistrado={
-        nombre:"admin",
-        pass:"Admin123"
-        }
-    */    
-        if(nombreUsuario===usuarioRegistrado.nombre && password === usuarioRegistrado.pass){
-            console.log("Acceso autorizado, generando token")
-            jwt.sign({nombreUsuario},process.env.PASS_SEGURA,{expiresIn:'30m'},(error,token)=>{
-                if(error){
-                    res.send(error);
-                } else {
-                    res.json({
-                        mensaje:"Usuario logeado",
-                        tokenLogIn:token});
-                }
-            })
-        } else {
-            console.log("Usuario incorrecto")
-        }
 }
+
+ 
+
+
+
+
+
 
 const verificacionUsuario=(req,res,next)=>{
 
@@ -76,7 +95,7 @@ const verificacionUsuario=(req,res,next)=>{
     const token=authToken.split(" ").pop(); //debido a que al mostrar por consola el token se entrega con "bearer" al principio, se utiliza el split y el pop para quedarnos solo con la última parte (token)
     //console.log(authToken);
     
-    next();
+    next(); //VER SI ESTO ES LO QUE HACE EL PROCESO CONTINUE A PESAR DE EXPIRACION TOKEN
     jwt.verify(token,process.env.PASS_SEGURA,(error,data)=>{
         if(error){
             if(error.name=="TokenExpiredError"){return res.send("Expiro el tiempo, por favor volver a logearse")}
@@ -88,8 +107,23 @@ const verificacionUsuario=(req,res,next)=>{
         }
     })
 
-
-
 }
 
-module.exports={infoCompleta,agregarPelicula,login,verificacionUsuario}
+const registrarAdmin=async (req,res)=>{
+    const {user,password}=req.body;
+
+    const passEncriptada= await bcrypt.hash(password,10); //con esto estoy encriptano la variable password con un nivel 10 y como resultado da la variable passEncriptada. Se trata de una funcion asincrona para que la contraseña sea encriptada antes de su registro en la DB
+
+    dbConnection.query('INSERT INTO administradores (nombreUsuario,password) VALUES(?,?)',[user,passEncriptada],(error,data)=>{
+        if(error){
+            res.send(error);
+        }else{
+            res.send("Usuario registrado!!")
+        }
+    }
+    )
+}
+
+
+
+module.exports={infoCompleta,agregarPelicula,login,verificacionUsuario,registrarAdmin}
