@@ -2,6 +2,7 @@ const dbConnection = require('../config/dataBase');
 const jwt=require('jsonwebtoken');
 require('dotenv').config();
 const bcrypt=require('bcrypt');
+const PASS_SEGURA=process.env.PASS_SEGURA
 
 const infoCompleta=(req,res)=>{
 
@@ -96,7 +97,7 @@ const verificacionUsuario=(req,res,next)=>{
     //console.log(authToken);
     
     next(); //VER SI ESTO ES LO QUE HACE EL PROCESO CONTINUE A PESAR DE EXPIRACION TOKEN
-    jwt.verify(token,process.env.PASS_SEGURA,(error,data)=>{
+    jwt.verify(token,PASS_SEGURA,(error,data)=>{ //process.env.PASS_SEGURA
         if(error){
             if(error.name=="TokenExpiredError"){return res.send("Expiro el tiempo, por favor volver a logearse")}
             res.send(error);

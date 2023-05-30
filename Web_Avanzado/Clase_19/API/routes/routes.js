@@ -3,6 +3,7 @@ const router=express.Router();
 const upload=require('../multer/cargaImagen') 
 const {infoCompleta,agregarPelicula,login,verificacionUsuario,registrarAdmin} = require('../controllers/controllers')
 
+
 router.get('/',infoCompleta);
 
 router.post('/login',login);
